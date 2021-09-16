@@ -1,0 +1,2 @@
+SUBSONIC_ARGS="--https-port=4443 --max-memory=200"
+SUBSONIC_USER=vagrant
