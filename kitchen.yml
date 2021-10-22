@@ -21,34 +21,42 @@ verifier:
   name: inspec
 
 platforms:
-- name: optum_rhel7_standard
-  driver:
+#- name: optum_rhel7_standard
+#  driver:
 #    linked_clone: true
-    box: optum_rhel7_standard
-    box_url: http://chef-images.optum.com/vagrant/optum_rhel7_standard
+#    box: optum_rhel7_standard
+#    box_url: http://chef-images.optum.com/vagrant/optum_rhel7_standard
+#    network:
+#      - ["forwarded_port", {guest: 4443, host: 443, auto_correct: true}]
+#  customize:
+#    cpus: 2
+#    memory: 1024
+
+#- name: optum_win16_standard
+#  os_type: windows
+#  transport:
+#    name: winrm
+#    elevated: true
+#    elevated_username: vagrant
+#    elevated_password: vagrant
+#  driver:
+##    linked_clone: true
+#    box_name: optum_win16_standard
+#    box_url: http://chef-images.optum.com/vagrant/optum_win16_standard
+#    network:
+#      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
+#  customize:
+#   cpus: 2
+#    memory: 1024
+
+- name: rockylinux-8.4
+  driver:
+    linked_clone: true
     network:
       - ["forwarded_port", {guest: 4443, host: 443, auto_correct: true}]
   customize:
     cpus: 2
     memory: 1024
-
-- name: optum_win16_standard
-  os_type: windows
-  transport:
-    name: winrm
-    elevated: true
-    elevated_username: vagrant
-    elevated_password: vagrant
-  driver:
-#    linked_clone: true
-    box_name: optum_win16_standard
-    box_url: http://chef-images.optum.com/vagrant/optum_win16_standard
-    network:
-      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
-  customize:
-    cpus: 2
-    memory: 1024
-
 suites:
   - name: default
     run_list:

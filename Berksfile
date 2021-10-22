@@ -1,3 +1,3 @@
-source 'https://supermarket.optum.com'
+source 'https://supermarket.chef.io'
 
 metadata
