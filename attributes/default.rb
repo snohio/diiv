@@ -1,7 +1,7 @@
 #
 # Cookbook:: diiv
 
-default['diiv']['install_source'] = 'https://dooss.uhc.com/chef-clients/diiv/'
+default['diiv']['install_source'] = 'https://s3-eu-west-1.amazonaws.com/subsonic-public/download/'
 
 case node['platform_family']
 
