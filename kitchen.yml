@@ -25,7 +25,7 @@ platforms:
 #  driver:
 #    linked_clone: true
 #    box: optum_rhel7_standard
-#    box_url: http://chef-images.optum.com/vagrant/optum_rhel7_standard
+#    box_url: http://chef-images.xxxxx.com/vagrant/optum_rhel7_standard
 #    network:
 #      - ["forwarded_port", {guest: 4443, host: 443, auto_correct: true}]
 #  customize:
@@ -42,7 +42,7 @@ platforms:
 #  driver:
 ##    linked_clone: true
 #    box_name: optum_win16_standard
-#    box_url: http://chef-images.optum.com/vagrant/optum_win16_standard
+#    box_url: http://chef-images.xxxxx.com/vagrant/optum_win16_standard
 #    network:
 #      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
 #  customize:
@@ -53,7 +53,8 @@ platforms:
   driver:
     linked_clone: true
     network:
-      - ["forwarded_port", {guest: 4443, host: 443, auto_correct: true}]
+      - ["forwarded_port", {guest: 4443, host: 4443, auto_correct: true}]
+      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
   customize:
     cpus: 2
     memory: 1024
