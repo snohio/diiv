@@ -12,7 +12,7 @@ provisioner:
   channel: stable
 
 ###  Modify this setting to additional chef-client log output (auto/warn/info/etc.)
-  log_level: auto
+
 
 ### Uncomment this setting to have Test Kitchen fail on any deprecation warning; useful in advance of a new chef-client release
   # deprecations_as_errors: true
@@ -51,13 +51,30 @@ platforms:
 
 - name: rockylinux-8.4
   driver:
-    linked_clone: true
+#    linked_clone: true
     network:
       - ["forwarded_port", {guest: 4443, host: 4443, auto_correct: true}]
       - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
   customize:
     cpus: 2
-    memory: 1024
+    memory: 2048
+
+- name: tas50/windows_2016
+  os_type: windows
+  transport:
+    name: winrm
+    elevated: true
+    elevated_username: vagrant
+    elevated_password: vagrant
+  driver:
+    box_name: butler_win16
+    network:
+      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
+    customize:
+      cpus: 2
+      memory: 2048
+
+
 suites:
   - name: default
     run_list:
