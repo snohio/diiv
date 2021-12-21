@@ -1,0 +1,192 @@
+PS C:\Users\butler\repos\snohio\diiv> kitchen diagnose Win
+---
+timestamp: 2021-12-21 16:38:43 UTC
+kitchen_version: 3.1.0
+instances:
+  default-Windows2019:
+    platform:
+      os_type: windows
+      shell_type: powershell
+    state_file:
+      azure_environment: Azure
+      azure_resource_group_name: kitchen-butler-tk-20211221T163123
+      hostname: 20.124.202.44
+      last_action: create
+      last_error:
+      password: XejFCs2ZW1l/4zR4NTHob+PNKdWks78M4A==
+      server_id: vmc0179b631b829687
+      subscription_id: b02e675a-cee0-49bd-a056-daa7ed05bf4e
+      use_managed_disks: true
+      username: azure
+      uuid: c0179b631b829687
+      vm_name: tk-c0179b631b82
+    driver:
+      azure_api_retries: 5
+      azure_environment: Azure
+      azure_resource_group_name: butler-tk
+      azure_resource_group_prefix: kitchen-
+      azure_resource_group_suffix: ''
+      boot_diagnostics_enabled: 'true'
+      custom_data: ''
+      customize:
+        cpus: 2
+        memory: 2048
+      data_disks:
+      deployment_sleep: 10
+      destroy_explicit_resource_group: true
+      destroy_explicit_resource_group_tags: true
+      destroy_resource_group_contents: false
+      existing_storage_account_blob_url: ''
+      existing_storage_account_container: vhds
+      explicit_resource_group_name:
+      format_data_disks: false
+      format_data_disks_powershell_script: false
+      image_id: ''
+      image_url: ''
+      image_urn: MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest
+      kitchen_root: C:/Users/butler/repos/snohio/diiv
+      location: East US
+      log_level: :info
+      machine_size: Standard_D2s_v3
+      name: azurerm
+      network:
+      - - forwarded_port
+        - guest: 4040
+          host: 4040
+          auto_correct: true
+      nic_name: ''
+      os_disk_size_gb: ''
+      os_type: linux
+      password: XXvFooSiatq706f1y+228bvbKoCLE97e9Q==
+      plan: {}
+      post_deployment_parameters: {}
+      post_deployment_template: ''
+      pre_create_command:
+      pre_deployment_parameters: {}
+      pre_deployment_template: ''
+      public_ip: false
+      public_ip_sku: Basic
+      resource_group_tags: {}
+      secret_url: ''
+      storage_account_type: Standard_LRS
+      subnet_id: ''
+      subscription_id: b02e675a-cee0-49bd-a056-daa7ed05bf4e
+      system_assigned_identity: false
+      test_base_path: C:/Users/butler/repos/snohio/diiv/test/integration
+      use_ephemeral_osdisk: false
+      use_fqdn_hostname: false
+      use_managed_disks: true
+      user_assigned_identities: []
+      username: azure
+      vault_name: ''
+      vault_resource_group: ''
+      vm_name:
+      vm_tags: {}
+      vnet_id: ''
+      winrm_powershell_script: false
+    provisioner:
+      always_update_cookbooks: true
+      architecture:
+      attributes:
+        audit:
+          reporter: cli
+      berksfile_path:
+      channel: stable
+      checksum:
+      chef_client_path: "\\bin\\chef-client.bat"
+      chef_license:
+      chef_omnibus_install_options:
+      chef_omnibus_url: https://omnitruck.chef.io/install.sh
+      chef_zero_host:
+      chef_zero_port: 8889
+      client_rb: {}
+      clients_path:
+      command_prefix:
+      config_path:
+      cookbook_files_glob: README.*,VERSION,metadata.{json,rb},attributes.rb,recipe.rb,attributes/**/*,definitions/**/*,files/**/*,libraries/**/*,providers/**/*,recipes/**/*,resources/**/*,templates/**/*,ohai/**/*
+      data_bags_path:
+      data_path:
+      debug:
+      deprecations_as_errors: false
+      download_url:
+      downloads: {}
+      encrypted_data_bag_secret_key_path:
+      enforce_idempotency: false
+      environments_path:
+      ftp_proxy:
+      http_proxy:
+      https_proxy:
+      install_strategy: once
+      json_attributes: true
+      kitchen_root: C:/Users/butler/repos/snohio/diiv
+      log_file:
+      log_level: auto
+      max_retries: 1
+      multiple_converge: 1
+      name: chef_infra
+      named_run_list: {}
+      nodes_path:
+      platform:
+      platform_version:
+      policy_group:
+      policyfile:
+      policyfile_path:
+      product_name: chef
+      product_version: 17
+      profile_ruby: false
+      require_chef_omnibus: true
+      retry_on_exit_code:
+      - 35
+      - 213
+      roles_path:
+      root_path: "$env:TEMP\\kitchen"
+      ruby_bindir: "\\embedded\\bin"
+      run_list:
+      - recipe[diiv::default]
+      sudo:
+      sudo_command:
+      test_base_path: C:/Users/butler/repos/snohio/diiv/test/integration
+      uploads: {}
+      wait_for_retry: 30
+    transport:
+      connection_retries: 5
+      connection_retry_sleep: 1
+      elevated: false
+      kitchen_root: C:/Users/butler/repos/snohio/diiv
+      log_level: :info
+      max_wait_until_ready: 600
+      name: winrm
+      operation_timeout: 60
+      password:
+      port: 5985
+      rdp_port: 3389
+      receive_timeout: 70
+      scheme: http
+      test_base_path: C:/Users/butler/repos/snohio/diiv/test/integration
+      username: administrator
+      winrm_transport: :negotiate
+    verifier:
+      backend_cache: true
+      chef_omnibus_root: "/opt/chef"
+      command_prefix:
+      debug:
+      ftp_proxy:
+      http_proxy:
+      https_proxy:
+      inspec_tests:
+      - test/integration/default
+      kitchen_root: C:/Users/butler/repos/snohio/diiv
+      load_plugins: true
+      log_level: :info
+      name: inspec
+      plugin_config: {}
+      root_path: "$env:TEMP\\verifier"
+      sudo:
+      sudo_command:
+      suite_name: default
+      test_base_path: C:/Users/butler/repos/snohio/diiv/test/integration
+    lifecycle_hooks:
+      debug:
+      kitchen_root: C:/Users/butler/repos/snohio/diiv
+      log_level: :info
+      test_base_path: C:/Users/butler/repos/snohio/diiv/test/integration

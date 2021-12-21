@@ -3,6 +3,10 @@
 
 default['diiv']['install_source'] = 'https://s3-eu-west-1.amazonaws.com/subsonic-public/download/'
 
+default['audit']['compliance_phase'] = true
+default['audit']['fetcher'] = 'chef-automate'
+default['audit']['reporter'] = 'chef-server-automate', 'cli'
+
 case node['platform_family']
 
 when 'rhel'

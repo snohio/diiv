@@ -22,4 +22,4 @@ SUBSONIC_ARGS="--port=4040 --https-port=4443 --max-memory=150"
 # below 1024. Also make sure to grant the user write permissions in
 # the music directories, otherwise changing album art and tags will fail.
 
-SUBSONIC_USER=vagrant
+SUBSONIC_USER=root

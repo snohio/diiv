@@ -2,7 +2,7 @@
 # Cookbook:: diiv
 # Recipe:: redhat
 #
-# Copyright:: 2020, Mike Butler, All Rights Reserved.
+# Copyright:: 2022, Mike Butler, All Rights Reserved.
 
 package 'java-1.8.0-openjdk' do
   action :install
