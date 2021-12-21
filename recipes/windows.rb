@@ -19,3 +19,9 @@ end
 windows_service 'Subsonic' do
   action [:configure, :start]
 end
+
+cookbook_file 'c:/Program Files (x86)/Subsonic/subsonic-service.exe.vmoptions' do
+  source 'subsonic-service.exe.vmoptions'
+  action :create
+  notifies :restart, 'windows_service[Subsonic]', :immediately
+end

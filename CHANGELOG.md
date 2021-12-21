@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 1.2.1
+
+- Changed the ports to 8880 and 443
+- Added the file that configures the Windows port.
+
 ## 1.2.0
 
 - Converted to use Policyfiles instead of Berks to play with.

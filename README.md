@@ -4,13 +4,22 @@
 
 I run Subsonic at home and always threatened to create a cookbook for it. It turned out easier than I thought. The other thing I wanted to do is have something somewhat functional to test the development laptop. You can review the results of the kitchen runs and other Chef stuff in the [NOTES.md](NOTES.md) file.  All in all it has been about 25 - 40% faster than the standard laptop.
 
+Most recently I switched to Azure for the build. I want to run those times for testing versus VirtualBox. Azure might be my new favorite.
+
+We also switched to a Policyfile model and integrated the `kitchen verify` Inspec tests into a Compliance Profile as a part of the cookbook (client 17)
+
 ## I know this could be better
 
-This was a cookbook to learn how to install and keep running the Subsonic app on my VMs. It sets the RHEL version to port 4443 and the windows to http on port 4040.
+This was a cookbook to learn how to install and keep running the Subsonic app on my VMs. It sets the RHEL version to port 443 and the windows to http on port 8880.
 
-## Missing Pieces
+UPDATE: 1.2.1 - It is actually getting better!
 
-I was unable to find where the actual configuration for the port was on Windows. There is a Subsonic Control Panel that you can set it to 443 from 4040, but I'm wondering if that is set inside of the database because I can't find a file or registry key for that.
+## Missing Pieces - FIXED IT IN 1.2.1
+
+>I was unable to find where the actual configuration for the port was on Windows. There is a Subsonic Control Panel that you can set it to 443 from 4040, but I'm wondering if that is set inside of the database because I can't find a file or registry key for that.
+
+Leaving this here because it is awesome that I found the configuration. This is now in 1.2.1.
+We also changed ports from 4040 to 8880 on the http port because that is cached by Cloudflare
 
 ## To do still
 
@@ -34,8 +43,8 @@ windows_service 'Subsonic' do
 end
 ```
 
-I still would like to find how to set the port on Windows. There are other configs I'd like to do but I never really learned the database configurations and commands.
+We need to do something similar for the Redhat family when selinux is used. It is switched back to Root for now. I would like to create local user accounts with random passwords without local login rights and running the service as them. The MUSIC directory will need to be aligned with that if this cookbook were actually used to configure Subsonic.
 
-## Thanks for Watching!
+## Thanks for Watching
 
 Feel free to give this a clone down and see how it does on your system
