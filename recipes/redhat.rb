@@ -4,6 +4,8 @@
 #
 # Copyright:: 2022, Mike Butler, All Rights Reserved.
 
+include_recipe 'selinux::permissive'
+
 package 'java-1.8.0-openjdk' do
   action :install
 end

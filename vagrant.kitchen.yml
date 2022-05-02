@@ -19,12 +19,12 @@ verifier:
 
 platforms:
 
-- name: rockylinux-8.4
+- name: almalinux-8.5
   driver:
 #    linked_clone: true
     network:
-      - ["forwarded_port", {guest: 4443, host: 4443, auto_correct: true}]
-      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
+      - ["forwarded_port", {guest: 443, host: 4443, auto_correct: true}]
+      - ["forwarded_port", {guest: 8880, host: 8880, auto_correct: true}]
   customize:
     cpus: 2
     memory: 2048
@@ -39,7 +39,8 @@ platforms:
   driver:
     box_name: butler_win16
     network:
-      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
+      - ["forwarded_port", {guest: 443, host: 443, auto_correct: true}]
+      - ["forwarded_port", {guest: 8880, host: 4040, auto_correct: true}]
     customize:
       cpus: 2
       memory: 2048
