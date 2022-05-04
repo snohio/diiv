@@ -4,7 +4,8 @@
 #
 # Copyright:: 2020, The Authors, All Rights Reserved.
 
-require 'spec_helper'
+require 'chefspec'
+require 'chefspec/policyfile'
 
 describe 'diiv::default' do
   context 'When all attributes are default, on Redhat 7' do
