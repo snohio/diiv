@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 1.3.1
+
+- Added SELinux and Firewall to RHEL
+- Added SELinux Compliance to the Profile
+- Fixed config file (got converted to CRLF)
+- Fixed Azure kitchen
+
 ## 1.2.1
 
 - Changed the ports to 8880 and 443

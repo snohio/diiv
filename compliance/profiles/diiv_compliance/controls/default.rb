@@ -20,8 +20,7 @@ if os.family == 'redhat'
     describe selinux do
       it { should be_installed }
       it { should_not be_disabled }
-      it { should be_enforcing }
-      it { should_not be_permissive }
+      it { should be_permissive }
     end
   end
 end
