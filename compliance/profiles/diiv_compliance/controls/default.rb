@@ -23,4 +23,15 @@ if os.family == 'redhat'
       it { should be_permissive }
     end
   end
+
+  control 'Firewalld Configuration' do
+    impact 0.7
+    title 'firewalld configuration'
+    desc 'Describes the configuration of FirewallD for the DiiV Application'
+    describe firewalld do
+      it { should be_running }
+      its('default_zone') { should eq 'public' }
+      it { should have_service_enabled_in_zone('ssh', 'public', 'https') }
+    end
+  end
 end

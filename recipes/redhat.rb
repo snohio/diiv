@@ -26,3 +26,18 @@ cookbook_file '/etc/sysconfig/subsonic' do
   action :create
   notifies :restart, 'service[subsonic]', :delayed
 end
+
+# THE BELOW SECTION IS NOT WORKING. THERE IS AN ISSUE WITH THE FIREWALLD_ZONE RESOURCE
+# UNTIL THAT SEEMS TO GET FIXED, YOU CAN RUN THE NEXT THREE COMMANDS ON THE MACHING TO CONFIGFURE IT MANUALLY
+# firewall-cmd --permanent --zone=public --add-port=8880/tcp
+# firewall-cmd --permanent --zone=public --add-service=https
+# firewall-cmd --complete-reload
+
+# firewalld 'firewall config'
+
+# firewalld_zone 'public' do
+#  short 'public'
+#  description 'Configured with Chef. For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.'
+#  services %w(ssh dhcpv6-client https)
+#  version '1'
+# end

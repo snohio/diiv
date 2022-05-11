@@ -13,23 +13,24 @@ provisioner:
   product_version: 17
   channel: stable
 
-### Uncomment this setting to have Test Kitchen fail on any deprecation warning; useful in advance of a new chef-client release
-  # deprecations_as_errors: true
-
 verifier:
   name: inspec
 
 platforms:
 
+- name: ubuntu
+  driver:
+    image_urn: Canonical:UbuntuServer:18.04-LTS:latest
+  transport:
+    name: ssh
+    ssh_key: ~/.ssh/id_kitchen-azurerm
+
 - name: RHEL7
   driver:
     image_urn: RedHat:RHEL:7-LVM:latest
-    network:
-      - ["forwarded_port", {guest: 4443, host: 4443, auto_correct: true}]
-      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
   transport:
     name: ssh
-#    ssh_key: ~/.ssh/id_kitchen-azurerm
+    ssh_key: ~/.ssh/id_kitchen-azurerm
 
 - name: Windows2019
   os_type: windows
@@ -37,8 +38,6 @@ platforms:
     name: winrm
   driver:
     image_urn: MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest
-    network:
-      - ["forwarded_port", {guest: 4040, host: 4040, auto_correct: true}]
 #    username: "azure"
 #    password: "P2ssw0rd"
 
@@ -48,7 +47,7 @@ suites:
       - recipe[diiv::default]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - compliance/profiles/diiv_compliance/controls
     attributes:
       audit:
         reporter: 'cli'
