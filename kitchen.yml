@@ -18,7 +18,15 @@ verifier:
 
 platforms:
 
-- name: ubuntu
+
+- name: ubuntu20
+  driver:
+    image_urn: Canonical:0001-com-ubuntu-server-focal:20_04-lts:latest
+  transport:
+    name: ssh
+    ssh_key: ~/.ssh/id_kitchen-azurerm
+
+- name: ubuntu18
   driver:
     image_urn: Canonical:UbuntuServer:18.04-LTS:latest
   transport:
