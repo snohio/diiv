@@ -22,3 +22,4 @@ SUBSONIC_ARGS="--port=8880 --https-port=443 --max-memory=150"
 # the music directories, otherwise changing album art and tags will fail.
 
 SUBSONIC_USER=root
+
