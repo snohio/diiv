@@ -1,3 +1,3 @@
-SUBSONIC_ARGS="--port=8880 --https-port=443 --max-memory=160"
+SUBSONIC_ARGS="--port=8880 --https-port=443 --max-memory=140"
 
 SUBSONIC_USER=root
