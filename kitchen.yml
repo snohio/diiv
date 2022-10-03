@@ -1,11 +1,13 @@
 ---
 driver:
   name: azurerm
-  subscription_id: 'b02e675a-cee0-49bd-a056-daa7ed05bf4e'
+  subscription_id: 'YOURSUBSCRIPTIONIDHERE'
   location: 'East US'
   machine_size: 'Standard_D2s_v3'
-  azure_resource_group_prefix: 'butler-tk'
-  
+  azure_resource_group_prefix: 'azure-tk'
+  resource_group_tags:
+    X-TTL: '24'
+
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
