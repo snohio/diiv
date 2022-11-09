@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
-## 3.0.0
+## 3.0.1
 
 - Updated for Chef Client 18
 - Moved to the native selinux resources that came with Client 18
