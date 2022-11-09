@@ -2,6 +2,17 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 3.0.0
+
+- Updated for Chef Client 18
+- Moved to the native selinux resources that came with Client 18
+- Fixed the firewalld on RHEL by using the firewall resource. I would like to make the inspec test better.
+- Windows Service Account Enhancement
+  - Added "subsonic" user creation
+  - Setting it as *allowed to run as a service*
+  - configured the service to use that account. (See [README.md](README.md) )
+  - There is a Random Password generator commented out in the code. Go see those notes. [windows.rb](recipes/windows.rb)
+  
 ## 2.0.0
 
 - Added Ubuntu / Debian to the list of supported platforms

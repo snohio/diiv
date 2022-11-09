@@ -4,7 +4,12 @@
 #
 # Copyright:: 2022, Mike Butler, All Rights Reserved.
 
-include_recipe 'selinux::permissive'
+# include_recipe 'selinux::permissive'
+
+selinux_state 'permissive' do
+  automatic_reboot true
+  action :permissive
+end
 
 package 'java-1.8.0-openjdk' do
   action :install
@@ -27,17 +32,17 @@ cookbook_file '/etc/sysconfig/subsonic' do
   notifies :restart, 'service[subsonic]', :delayed
 end
 
-# THE BELOW SECTION IS NOT WORKING. THERE IS AN ISSUE WITH THE FIREWALLD_ZONE RESOURCE
-# UNTIL THAT SEEMS TO GET FIXED, YOU CAN RUN THE NEXT THREE COMMANDS ON THE MACHING TO CONFIGFURE IT MANUALLY
-# firewall-cmd --permanent --zone=public --add-port=8880/tcp
-# firewall-cmd --permanent --zone=public --add-service=https
-# firewall-cmd --complete-reload
+firewall 'default'
 
-# firewalld 'firewall config'
+# open standard ssh port
+firewall_rule 'ssh' do
+  port     22
+  command  :allow
+end
 
-# firewalld_zone 'public' do
-#  short 'public'
-#  description 'Configured with Chef. For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.'
-#  services %w(ssh dhcpv6-client https)
-#  version '1'
-# end
+# open standard http port to tcp traffic only; insert as first rule
+firewall_rule 'http/https' do
+  protocol :tcp
+  port     [8880, 443]
+  command :allow
+end
