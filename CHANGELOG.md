@@ -2,6 +2,12 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 4.0.0
+
+- Moved RHEL and Debian to Temurin JDK 8 as it is still updated and supported.
+- Created a `get_music` custom resource that will populate /var/music or c:\music with a few collections from archive.org. (This parses the URL and pulls the artist/album after the fourth / in the URL. The URLs are in an array attribute in the attributes/default.rb)
+- Windows password and account generation is wrapped and will only get created if the user does not exist.
+
 ## 3.0.1
 
 - Updated for Chef Client 18
@@ -12,7 +18,7 @@ This file is used to list changes made in each version of the diiv cookbook.
   - Setting it as *allowed to run as a service*
   - configured the service to use that account. (See [README.md](README.md) )
   - There is a Random Password generator commented out in the code. Go see those notes. [windows.rb](recipes/windows.rb)
-  
+
 ## 2.0.0
 
 - Added Ubuntu / Debian to the list of supported platforms

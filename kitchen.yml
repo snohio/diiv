@@ -4,22 +4,26 @@ driver:
   subscription_id: 'YOURSUBSCRIPTIONIDHERE'
   location: 'East US'
   machine_size: 'Standard_D2s_v3'
-  azure_resource_group_prefix: 'azure-tk'
+  azure_resource_group_prefix: 'azure-tk-diiv-'
   resource_group_tags:
     X-TTL: '24'
+    application: 'chef'
+    team: 'chef-se'
+    owner: 'email@progress.com'
+    expiration: '2025-09-30'
+    ephemeral: 'no'
 
 provisioner:
   name: chef_zero
   always_update_cookbooks: true
   product_name: chef
-  product_version: 17
+  product_version: 18
   channel: stable
 
 verifier:
   name: inspec
 
 platforms:
-
 
 - name: ubuntu20
   driver:
@@ -28,16 +32,23 @@ platforms:
     name: ssh
     ssh_key: ~/.ssh/id_kitchen-azurerm
 
-- name: ubuntu18
+- name: ubuntu22
   driver:
-    image_urn: Canonical:UbuntuServer:18.04-LTS:latest
+    image_urn: Canonical:0001-com-ubuntu-server-jammy:22_04-lts-gen2:latest
   transport:
     name: ssh
     ssh_key: ~/.ssh/id_kitchen-azurerm
 
-- name: RHEL7
+- name: ubuntu24
   driver:
-    image_urn: RedHat:RHEL:7-LVM:latest
+    image_urn: Canonical:ubuntu-24_04-lts:server:latest
+  transport:
+    name: ssh
+    ssh_key: ~/.ssh/id_kitchen-azurerm
+
+- name: RHEL8
+  driver:
+    image_urn: RedHat:RHEL:8-LVM:latest
   transport:
     name: ssh
     ssh_key: ~/.ssh/id_kitchen-azurerm
@@ -46,10 +57,27 @@ platforms:
   os_type: windows
   transport:
     name: winrm
+    elevated: true
   driver:
     image_urn: MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest
-#    username: "azure"
-#    password: "P2ssw0rd"
+    winrm_powershell_script: |-
+      Set-MpPreference -DisableRealtimeMonitoring 1
+      winrm quickconfig -q
+      Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP" -RemoteAddress Any -Enabled True
+      Get-NetConnectionProfile | Set-NetConnectionProfile -NetworkCategory Private
+
+- name: Windows2022
+  os_type: windows
+  transport:
+    name: winrm
+    elevated: true
+  driver:
+    image_urn: MicrosoftWindowsServer:WindowsServer:2022-datacenter-azure-edition:latest
+    winrm_powershell_script: |-
+      Set-MpPreference -DisableRealtimeMonitoring $true
+      winrm quickconfig -q
+      Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP" -RemoteAddress Any -Enabled True
+      Get-NetConnectionProfile | Set-NetConnectionProfile -NetworkCategory Private
 
 suites:
   - name: default
@@ -61,3 +89,7 @@ suites:
     attributes:
       audit:
         reporter: 'cli'
+      diiv:
+        music_url:
+        -  "https://archive.org/compress/future-lovers-wklxxb/formats=VBR%20MP3&file=/future-lovers-wklxxb.zip"
+ 

@@ -1,4 +1,4 @@
--Xmx150m
+-Xmx200m
 -verbose:gc
 -Dsubsonic.host=0.0.0.0
 -Dsubsonic.port=8880
