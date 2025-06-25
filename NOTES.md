@@ -11,7 +11,7 @@ I am hopeful that this cookbook serves as a decent example of timing for a moder
 | OS / Version                                                     |     Win 1803 |      Win 1809 |      Win 1909 |      Win 1909 |    Apple 10.15.5 |      Win 20H2 |
 | Client Version:                                                  |      0.16.33 |       0.16.33 |       0.16.33 |      20.8.125 |         20.8.125 |      21.7.524 |
 | [speedtest](https://navapps.optum.com/speedtest-master/test.php) |           XX |         35/10 |         34/11 |         45/25 |            82/12 |         37/39 |
-| **Command using time in bash**                               | ............ | ............. | ............. | ............. |    ............. | ............. |
+| **Command using time in bash**                                   | ............ | ............. | ............. | ............. |    ............. | ............. |
 | chef -v                                                          |        13.4s |         08.1s |         13.6s |         05.8s |            01.6s |         03.1s |
 | cookstyle                                                        |        16.4s |         16.7s |         18.5s |         08.9s |            02.3s |         06.0s |
 | chef exec rspec                                                  |     1m 18.8s |         50.0s |      1m 17.6s |         36.6s |            05.1s |         07.9s |
@@ -38,7 +38,7 @@ $ kitchen create
        Box 'optum_rhel7_standard' (v1.0.5) is running the latest version.
        The following boxes will be kept...
        optum_rhel7_standard   (virtualbox, 1.0.5)
-       
+
        Checking for older boxes...
        No old versions of boxes to remove...
        Bringing machine 'default' up with 'virtualbox' provider...
@@ -64,10 +64,10 @@ $ kitchen create
            default: SSH address: 127.0.0.1:2222
            default: SSH username: vagrant
            default: SSH auth method: private key
-           default: 
+           default:
            default: Vagrant insecure key detected. Vagrant will automatically replace
            default: this with a newly generated keypair for better security.
-           default: 
+           default:
            default: Inserting generated public key within guest...
            default: Removing insecure key from the guest if it's present...
            default: Key inserted! Disconnecting and reconnecting using new SSH key...
@@ -79,7 +79,7 @@ $ kitchen create
            default: shared folder errors, please make sure the guest additions within the
            default: virtual machine match the version of VirtualBox you have installed on
            default: your host and reload your VM.
-           default: 
+           default:
            default: Guest Additions Version: 6.0.22
            default: VirtualBox Version: 6.1
        ==> default: Setting hostname...
@@ -95,7 +95,7 @@ $ kitchen create
        Box 'optum_win16_standard' (v1.0.9) is running the latest version.
        The following boxes will be kept...
        optum_win16_standard   (virtualbox, 1.0.9)
-       
+
        Checking for older boxes...
        No old versions of boxes to remove...
        Bringing machine 'default' up with 'virtualbox' provider...
@@ -132,12 +132,12 @@ $ kitchen create
            default: shared folder errors, please make sure the guest additions within the
            default: virtual machine match the version of VirtualBox you have installed on
            default: your host and reload your VM.
-           default: 
+           default:
            default: Guest Additions Version: 6.0.10
            default: VirtualBox Version: 6.1
        ==> default: Machine not provisioned because `--no-provision` is specified.
        [WinRM] Established
-       
+
        Vagrant instance <default-optum-win16-standard> created.
        Finished creating <default-optum-win16-standard> (2m39.52s).
 -----> Test Kitchen is finished. (4m53.28s)
@@ -146,7 +146,8 @@ $ kitchen create
 First time converging. The client is already downloaded but needs to copy to the VM.
 Also, the diiv cookbook connects to AWS to grab the 61MB (RHEL) and 132MB (Windows) Subsonic install file.
 
-```$ time kitchen converge
+```bash
+$ time kitchen converge
 -----> Starting Test Kitchen (v2.6.0)
 -----> Converging <default-optum-rhel7-standard>...
        Preparing files for transfer
@@ -227,7 +228,7 @@ Also, the diiv cookbook connects to AWS to grab the 61MB (RHEL) and 132MB (Windo
            - restore selinux security context
          * service[subsonic] action restart
            - restart service service[subsonic]
-       
+
        Running handlers:
        Running handlers complete
        Chef Infra Client finished, 4/6 resources updated in 01 minutes 50 seconds
@@ -240,13 +241,13 @@ Also, the diiv cookbook connects to AWS to grab the 61MB (RHEL) and 132MB (Windo
        Removing non-cookbook files before transfer
        Preparing validation.pem
        Preparing client.rb
-       
+
        ModuleType Version    Name                                ExportedCommands
        ---------- -------    ----                                ----------------
        Script     0.0        Omnitruck                           {Get-ProjectMetadata, Install-Project, install}
        Installing chef from C:\Users\vagrant\AppData\Local\Temp\chef-client-15.13.8-1-x64.msi
-       
-       
+
+
        Transferring files to <default-optum-win16-standard>
        +---------------------------------------------+
        âœ” 2 product licenses accepted.
@@ -273,7 +274,7 @@ Also, the diiv cookbook connects to AWS to grab the 61MB (RHEL) and 132MB (Windo
            - update Subsonic
            -   set service_type to 16 (was 272)
          * windows_service[Subsonic] action start (up to date)
-       
+
        Running handlers:
        Running handlers complete
        Chef Infra Client finished, 3/5 resources updated in 01 minutes 29 seconds
@@ -315,7 +316,7 @@ $ time kitchen converge
          * service[subsonic] action enable (up to date)
          * service[subsonic] action start (up to date)
          * cookbook_file[/etc/sysconfig/subsonic] action create (up to date)
-       
+
        Running handlers:
        Running handlers complete
        Chef Infra Client finished, 0/5 resources updated in 04 seconds
@@ -328,7 +329,7 @@ $ time kitchen converge
        Removing non-cookbook files before transfer
        Preparing validation.pem
        Preparing client.rb
-       
+
        ModuleType Version    Name                                ExportedCommands
        ---------- -------    ----                                ----------------
        Script     0.0        Omnitruck                           {Get-ProjectMetadata, Install-Project, install}
@@ -348,7 +349,7 @@ $ time kitchen converge
          * windows_package[Subsonic] action install (skipped due to not_if)
          * windows_service[Subsonic] action configure (up to date)
          * windows_service[Subsonic] action start (up to date)
-       
+
        Running handlers:
        Running handlers complete
        Chef Infra Client finished, 0/4 resources updated in 04 seconds
@@ -369,7 +370,7 @@ $ time kitchen verify
 -----> Setting up <default-optum-rhel7-standard>...
        Finished setting up <default-optum-rhel7-standard> (0m0.00s).
 -----> Verifying <default-optum-rhel7-standard>...
-       Loaded tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"} 
+       Loaded tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"}
 
 Profile: tests from {:path=>"C:/Users/mbutl11/repos/mbutl11/diiv/test/integration/default"} (tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"})
 Version: (not specified)
@@ -385,7 +386,7 @@ Test Summary: 2 successful, 0 failures, 0 skipped
 -----> Setting up <default-optum-win16-standard>...
        Finished setting up <default-optum-win16-standard> (0m0.00s).
 -----> Verifying <default-optum-win16-standard>...
-       Loaded tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"} 
+       Loaded tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"}
 
 Profile: tests from {:path=>"C:/Users/mbutl11/repos/mbutl11/diiv/test/integration/default"} (tests from {:path=>"C:.Users.mbutl11.repos.mbutl11.diiv.test.integration.default"})
 Version: (not specified)

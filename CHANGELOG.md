@@ -18,7 +18,7 @@ This file is used to list changes made in each version of the diiv cookbook.
   - Setting it as *allowed to run as a service*
   - configured the service to use that account. (See [README.md](README.md) )
   - There is a Random Password generator commented out in the code. Go see those notes. [windows.rb](recipes/windows.rb)
-  
+
 ## 2.0.0
 
 - Added Ubuntu / Debian to the list of supported platforms
