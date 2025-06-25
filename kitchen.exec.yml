@@ -1,0 +1,34 @@
+---
+driver:
+  name: exec
+  gui: false
+  privileged: true
+  customize:
+    memory: 4096
+
+transport:
+  name: exec
+
+platforms:
+  - name: windows-2019
+  - name: windows-2022
+  - name: macos-latest
+  - name: ubuntu-2004
+  - name: ubuntu-2204
+  - name: ubuntu-2404
+
+suites:
+  - name: default
+    run_list:
+      - recipe[diiv::default]
+    verifier:
+      name: inspec
+      sudo: true  
+      inspec_tests:
+       - compliance/profiles/diiv_compliance/controls
+    attributes:
+      audit:
+        reporter: 'cli'
+      diiv:
+        music_url:
+        - "https://stuff.snohio.com/3Oh3.zip"
