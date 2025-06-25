@@ -9,6 +9,8 @@
         "exitstatus",
         "lasfmcache",
         "lastfmcache",
+        "mbutl",
+        "NOKEY",
         "randpass",
         "sysconfig",
         "Temurin",

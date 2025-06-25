@@ -11,7 +11,7 @@ I am hopeful that this cookbook serves as a decent example of timing for a moder
 | OS / Version                                                     |     Win 1803 |      Win 1809 |      Win 1909 |      Win 1909 |    Apple 10.15.5 |      Win 20H2 |
 | Client Version:                                                  |      0.16.33 |       0.16.33 |       0.16.33 |      20.8.125 |         20.8.125 |      21.7.524 |
 | [speedtest](https://navapps.optum.com/speedtest-master/test.php) |           XX |         35/10 |         34/11 |         45/25 |            82/12 |         37/39 |
-| **__Command using time in bash__**                               | ............ | ............. | ............. | ............. |    ............. | ............. |
+| **Command using time in bash**                               | ............ | ............. | ............. | ............. |    ............. | ............. |
 | chef -v                                                          |        13.4s |         08.1s |         13.6s |         05.8s |            01.6s |         03.1s |
 | cookstyle                                                        |        16.4s |         16.7s |         18.5s |         08.9s |            02.3s |         06.0s |
 | chef exec rspec                                                  |     1m 18.8s |         50.0s |      1m 17.6s |         36.6s |            05.1s |         07.9s |
@@ -437,7 +437,7 @@ user    0m0.031s
 sys     0m0.109s
 ```
 
-### Chef Vesion for good measure
+### Chef Version for good measure
 
 ```bash
 $ time chef.exe -v
