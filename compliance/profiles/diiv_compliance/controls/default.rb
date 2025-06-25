@@ -1,4 +1,4 @@
-# copyright: 2022, Mike Butler
+# copyright: 2025, Mike Butler
 
 control 'subsonic-port' do
   impact 0.6

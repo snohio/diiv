@@ -2,7 +2,7 @@
 # Cookbook:: diiv
 # Recipe:: default
 #
-# Copyright:: 2022, The Authors, All Rights Reserved.
+# Copyright:: 2025, The Authors, All Rights Reserved.
 
 include_profile 'diiv::diiv_compliance'
 
