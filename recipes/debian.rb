@@ -15,16 +15,27 @@ node['diiv']['music_url'].each do |music_url|
   end
 end
 
+if node['platform_version'].to_i <= 20
+  directory '/etc/apt/keyrings' do
+    owner 'root'
+    group 'root'
+    mode '0755'
+    action :create
+    not_if { ::Dir.exist?('/etc/apt/keyrings') }
+  end
+end
+
 apt_update 'update_packages' do
   action :nothing
 end
 
 apt_repository 'adoptium' do
-  uri          'https://packages.adoptium.net/artifactory/deb'
-  components   ['main']
-  key          'https://packages.adoptium.net/artifactory/api/gpg/key/public'
-  action       :add
+  uri 'https://packages.adoptium.net/artifactory/deb'
+  components ['main']
+  key 'https://packages.adoptium.net/artifactory/api/gpg/key/public'
+  action :add
   notifies :update, 'apt_update[update_packages]', :immediately
+  signed_by false
 end
 
 # Install Eclipse Temurin 8

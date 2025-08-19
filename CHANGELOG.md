@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 4.1.0
+
+- Updated for changes in Chef Client 18.8.x around the apt_repository resource
+- Moved Functional Test for `kitchen verify` to test\integration\default\default.rb to just check outcomes
+
 ## 4.0.0
 
 - Moved RHEL and Debian to Temurin JDK 8 as it is still updated and supported.

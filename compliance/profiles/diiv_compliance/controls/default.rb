@@ -12,6 +12,16 @@ control 'subsonic-port' do
   end
 end
 
+control 'Subsonic - HTTPS' do
+  impact 0.7
+  title 'HTTPS Service'
+  desc 'Subsonic should be accessible over HTTPS'
+  describe http('https://localhost/login.view', ssl_verify: false) do
+    its('body') { should match(%r{<title>Subsonic</title>}) }
+    its('status') { should eq 200 }
+  end
+end
+
 if os.family == 'redhat'
   control 'Subsonic - Selinux' do
     impact 0.7
