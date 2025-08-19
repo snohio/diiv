@@ -5,7 +5,13 @@ driver:
   location: "East US"
   machine_size: "Standard_D2s_v3"
   azure_resource_group_prefix: "GITACTION-DIIV-"
-  resource_group_tags: <%= ENV["AZURE_TAGS"] %>
+  resource_group_tags:
+    X-TTL: '24'
+    application: 'chef'
+    team: 'chef-se'
+    owner: 'michael.butler@progress.com'
+    expiration: '2026-09-30'
+    ephemeral: 'no'
 
 provisioner:
   name: chef_infra
@@ -88,3 +94,4 @@ suites:
       diiv:
         music_url:
           - "https://stuff.snohio.com/3Oh3.zip"
+
