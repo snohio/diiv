@@ -62,7 +62,7 @@
       strategy:
         matrix:
           os:
-            - ubuntu-2204
+            - ubuntu-2404
           suite:
             - default
         fail-fast: false
