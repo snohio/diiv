@@ -4,9 +4,9 @@ maintainer_email 'mbutler@optum.com'
 license 'All Rights Reserved'
 description 'Installs/Configures Subsonic'
 
-version '4.0.0'
+version '4.1.1'
 
-chef_version '>= 17'
+chef_version '>= 18'
 supports 'redhat'
 supports 'windows'
 supports 'debian'

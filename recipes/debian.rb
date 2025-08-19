@@ -15,16 +15,27 @@ node['diiv']['music_url'].each do |music_url|
   end
 end
 
+if node['platform_version'].to_i <= 20
+  directory '/etc/apt/keyrings' do
+    owner 'root'
+    group 'root'
+    mode '0755'
+    action :create
+    not_if { ::Dir.exist?('/etc/apt/keyrings') }
+  end
+end
+
 apt_update 'update_packages' do
   action :nothing
 end
 
 apt_repository 'adoptium' do
-  uri          'https://packages.adoptium.net/artifactory/deb'
-  components   ['main']
-  key          'https://packages.adoptium.net/artifactory/api/gpg/key/public'
-  action       :add
+  uri 'https://packages.adoptium.net/artifactory/deb'
+  components ['main']
+  key 'https://packages.adoptium.net/artifactory/api/gpg/key/public'
+  action :add
   notifies :update, 'apt_update[update_packages]', :immediately
+  signed_by false
 end
 
 # Install Eclipse Temurin 8
@@ -46,11 +57,22 @@ dpkg_package 'subsonic' do
   action :install
 end
 
+ruby_block 'wait for subsonic install' do
+  block do
+    require 'timeout'
+    Timeout.timeout(480) do # wait up to 8 minutes
+      sleep 2 until ::File.directory?('/var/subsonic/lastfmcache2/')
+    end
+  end
+  action :run
+  not_if { node['packages']['Subsonic'] }
+end
+
 service 'subsonic' do
   action [:enable, :start]
 end
 
-ruby_block 'sleep after Subsonic restart' do
+ruby_block 'sleep after Subsonic Restart' do
   block do
     sleep 10  # Pauses for 10 seconds
   end
@@ -62,5 +84,5 @@ cookbook_file '/etc/default/subsonic' do
   mode '644'
   action :create
   notifies :restart, 'service[subsonic]', :immediately
-  notifies :run, 'ruby_block[sleep after Subsonic restart]', :immediately
+  notifies :run, 'ruby_block[sleep after Subsonic Restart]', :immediately
 end
