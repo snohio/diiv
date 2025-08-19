@@ -53,7 +53,7 @@
             CHEF_LICENSE: accept-no-persist
             KITCHEN_LOCAL_YAML: kitchen.exec.yml
     integration-ubuntu:
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-22.04
       needs:
         - markdownlint
         - yamllint
@@ -62,7 +62,7 @@
       strategy:
         matrix:
           os:
-            - ubuntu-2404
+            - ubuntu-2204
           suite:
             - default
         fail-fast: false
