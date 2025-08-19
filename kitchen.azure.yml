@@ -6,7 +6,7 @@ driver:
   machine_size: "Standard_D2s_v3"
   azure_resource_group_prefix: "GITACTION-DIIV-"
   resource_group_tags:
-    X-TTL: '24'
+    X-TTL: '2'
     application: 'chef'
     team: 'chef-se'
     owner: 'michael.butler@progress.com'
