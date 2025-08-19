@@ -52,22 +52,31 @@ remote_file '/tmp/' + node['diiv']['install_file'] do
   not_if { node['packages']['subsonic'] }
 end
 
-ruby_block 'sleep after Subsonic activity' do
-  block do
-    sleep 10  # Pauses for 10 seconds
-  end
-  action :nothing
-end
-
 dpkg_package 'subsonic' do
   source '/tmp/' + node['diiv']['install_file']
   action :install
-  notifies :run, 'ruby_block[sleep after Subsonic activity]', :immediately
+end
+
+ruby_block 'wait for subsonic install' do
+  block do
+    require 'timeout'
+    Timeout.timeout(240) do # wait up to 4 minutes
+      sleep 2 until ::File.directory?('/var/subsonic/lastfmcache2/')
+    end
+  end
+  action :run
+  not_if { node['packages']['Subsonic'] }
 end
 
 service 'subsonic' do
   action [:enable, :start]
-  subscribes :start, 'ruby_block[sleep after Subsonic activity]', :immediately
+end
+
+ruby_block 'sleep after Subsonic Restart' do
+  block do
+    sleep 10  # Pauses for 10 seconds
+  end
+  action :nothing
 end
 
 cookbook_file '/etc/default/subsonic' do
@@ -75,5 +84,5 @@ cookbook_file '/etc/default/subsonic' do
   mode '644'
   action :create
   notifies :restart, 'service[subsonic]', :immediately
-  notifies :run, 'ruby_block[sleep after Subsonic activity]', :immediately
+  notifies :run, 'ruby_block[sleep after Subsonic Restart]', :immediately
 end
