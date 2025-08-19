@@ -52,8 +52,8 @@
           env:
             CHEF_LICENSE: accept-no-persist
             KITCHEN_LOCAL_YAML: kitchen.exec.yml
-    integration-azure:
-      runs-on: ubuntu-latest
+    integration-ubuntu:
+      runs-on: ubuntu-22.04
       needs:
         - markdownlint
         - yamllint
@@ -62,9 +62,7 @@
       strategy:
         matrix:
           os:
-            - ubuntu-22
-            - RHEL8
-            - Windows2022
+            - ubuntu-2204
           suite:
             - default
         fail-fast: false
@@ -73,15 +71,6 @@
           uses: actions/checkout@main
         - name: Install Chef
           uses: actionshub/chef-install@main
-        - name: Azure Credentials
-          run: | 
-            mkdir ~/.azure
-            cat > ~/.azure/credentials << EOF
-            [${{ secrets.SUBSCRIPTION_ID }}]
-            client_id = "${{ secrets.CLIENT_ID }}"
-            client_secret = "${{ secrets.CLIENT_SECRET }}"
-            tenant_id = "${{ secrets.TENANT_ID }}"
-            EOF
         - name: Test-Kitchen Converge
           uses: actionshub/test-kitchen@main
           with:
@@ -90,9 +79,7 @@
             action: converge
           env:
             CHEF_LICENSE: accept-no-persist
-            KITCHEN_LOCAL_YAML: kitchen.azure.yml
-            AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-            AZURE_TAGS: ${{ vars.AZURE_TAGS }}
+            KITCHEN_LOCAL_YAML: kitchen.exec.yml
         - name: Test-Kitchen Verify
           uses: actionshub/test-kitchen@main
           with:
@@ -101,19 +88,7 @@
             action: verify
           env:
             CHEF_LICENSE: accept-no-persist
-            KITCHEN_LOCAL_YAML: kitchen.azure.yml
-            AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-        - name: Test-Kitchen Destroy
-          if: always()
-          uses: actionshub/test-kitchen@main
-          with:
-            suite: ${{ matrix.suite }}
-            os: ${{ matrix.os }}
-            action: destroy
-          env:
-            CHEF_LICENSE: accept-no-persist
-            KITCHEN_LOCAL_YAML: kitchen.azure.yml
-            AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+            KITCHEN_LOCAL_YAML: kitchen.exec.yml
     check:
       if: always()
       needs:
@@ -121,12 +96,14 @@
         - yamllint
         - jsonlint
         - cookstylelint
-        - integration-azure
+        - integration-windows
+        - integration-ubuntu
       runs-on: ubuntu-latest
       steps:
         - name: Decide whether the needed jobs succeeded or failed
           uses: re-actors/alls-green@release/v1
           with:
-
+            allowed-failures: 
+            allowed-skips: 
             jobs: ${{ toJSON(needs) }}
   
