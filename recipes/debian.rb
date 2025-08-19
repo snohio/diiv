@@ -60,7 +60,7 @@ end
 ruby_block 'wait for subsonic install' do
   block do
     require 'timeout'
-    Timeout.timeout(240) do # wait up to 4 minutes
+    Timeout.timeout(480) do # wait up to 8 minutes
       sleep 2 until ::File.directory?('/var/subsonic/lastfmcache2/')
     end
   end
