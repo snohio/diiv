@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 4.1.1
+
+- Fixed timing issues on Ubuntu installation not finishing (similar to previous fix for Windows)
+
 ## 4.1.0
 
 - Updated for changes in Chef Client 18.8.x around the apt_repository resource
@@ -12,6 +16,7 @@ This file is used to list changes made in each version of the diiv cookbook.
 - Moved RHEL and Debian to Temurin JDK 8 as it is still updated and supported.
 - Created a `get_music` custom resource that will populate /var/music or c:\music with a few collections from archive.org. (This parses the URL and pulls the artist/album after the fourth / in the URL. The URLs are in an array attribute in the attributes/default.rb)
 - Windows password and account generation is wrapped and will only get created if the user does not exist.
+- Fixed timing issues with the installation not finishing before the configuration changed on Windows.
 
 ## 3.0.1
 

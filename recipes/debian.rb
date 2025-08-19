@@ -52,20 +52,22 @@ remote_file '/tmp/' + node['diiv']['install_file'] do
   not_if { node['packages']['subsonic'] }
 end
 
-dpkg_package 'subsonic' do
-  source '/tmp/' + node['diiv']['install_file']
-  action :install
-end
-
-service 'subsonic' do
-  action [:enable, :start]
-end
-
-ruby_block 'sleep after Subsonic restart' do
+ruby_block 'sleep after Subsonic activity' do
   block do
     sleep 10  # Pauses for 10 seconds
   end
   action :nothing
+end
+
+dpkg_package 'subsonic' do
+  source '/tmp/' + node['diiv']['install_file']
+  action :install
+  notifies :run, 'ruby_block[sleep after Subsonic activity]', :immediately
+end
+
+service 'subsonic' do
+  action [:enable, :start]
+  subscribes :start, 'ruby_block[sleep after Subsonic activity]', :immediately
 end
 
 cookbook_file '/etc/default/subsonic' do
@@ -73,5 +75,5 @@ cookbook_file '/etc/default/subsonic' do
   mode '644'
   action :create
   notifies :restart, 'service[subsonic]', :immediately
-  notifies :run, 'ruby_block[sleep after Subsonic restart]', :immediately
+  notifies :run, 'ruby_block[sleep after Subsonic activity]', :immediately
 end
