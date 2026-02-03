@@ -5,13 +5,15 @@
 # Copyright:: 2025, Mike Butler, All Rights Reserved.
 
 # Create a user for Subsonic if it does not already exist
-CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..')').to_a
+require 'securerandom'
+
+CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..'~').to_a
 def random_password(length = 18)
-  CHARS.sort_by { rand }.join[0...length]
+  CHARS.sort_by { SecureRandom.random_number }.join[0...length]
 end
 randpass = random_password
 
-log "Password is #{randpass}. Forget I every told you that." do
+log "Password is #{randpass}. Forget I ever told you that." do
   not_if { shell_out('net user subsonic').exitstatus == 0 }
 end
 
