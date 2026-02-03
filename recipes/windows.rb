@@ -4,26 +4,21 @@
 #
 # Copyright:: 2025, Mike Butler, All Rights Reserved.
 
-# Check if the Subsonic user already exists
-user_exists = begin
-                powershell_out!("Get-LocalUser -Name 'subsonic'").exitstatus == 0
-              rescue
-                false
-              end
-
 # Create a user for Subsonic if it does not already exist
-unless user_exists
-  CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..')').to_a
-  def random_password(length = 18)
-    CHARS.sort_by { rand }.join[0...length]
-  end
-  randpass = random_password
-  log "Password is #{randpass}. Forget I every told you that."
+CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..')').to_a
+def random_password(length = 18)
+  CHARS.sort_by { rand }.join[0...length]
+end
+randpass = random_password
 
-  windows_user 'subsonic' do
-    password randpass
-    action :create
-  end
+log "Password is #{randpass}. Forget I every told you that." do
+  not_if { shell_out('net user subsonic').exitstatus == 0 }
+end
+
+windows_user 'subsonic' do
+  password randpass
+  action :create
+  not_if { shell_out('net user subsonic').exitstatus == 0 }
 end
 
 group 'Administrators' do
