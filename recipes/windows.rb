@@ -89,10 +89,19 @@ ruby_block 'wait for subsonic install' do
   not_if { node['packages']['Subsonic'] }
 end
 
-windows_service 'Subsonic' do
+# Configure service with credentials only when user is first created
+windows_service 'Subsonic Initial Setup' do
+  service_name 'Subsonic'
   action [:configure, :start]
   run_as_user '.\subsonic'
   run_as_password "#{randpass}"
+  not_if { shell_out('net user subsonic').exitstatus == 0 }
+end
+
+# On subsequent runs, just ensure service is started (don't reconfigure credentials)
+windows_service 'Subsonic' do
+  action :start
+  only_if { shell_out('net user subsonic').exitstatus == 0 }
 end
 
 # This is used for sleeping after the Subsonic service is started to ensure it is fully operational before proceeding.
