@@ -96,21 +96,21 @@ windows_service 'Subsonic Initial Setup' do
   service_name 'Subsonic'
   action [:configure, :start]
   run_as_user '.\subsonic'
-  run_as_password "#{randpass}"
-  not_if { shell_out('net user subsonic').exitstatus == 0 }
+  run_as_password randpass.to_s
+  not_if 'net user subsonic'
 end
 
 # On subsequent runs, just ensure service is started (don't reconfigure credentials)
 windows_service 'Subsonic' do
   action :start
-  only_if { shell_out('net user subsonic').exitstatus == 0 }
+  only_if 'net user subsonic'
 end
 
 # This is used for sleeping after the Subsonic service is started to ensure it is fully operational before proceeding.
 # This is called by the notifies function.
 ruby_block 'sleep after Subsonic restart' do
   block do
-    sleep 10  # Pauses for 10 seconds
+    sleep 10 # Pauses for 10 seconds
   end
   action :nothing
 end
