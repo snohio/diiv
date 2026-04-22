@@ -55,6 +55,7 @@ jobs:
           KITCHEN_LOCAL_YAML: kitchen.azure.yml
           AZURE_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
           AZURE_TAGS: ${{ vars.AZURE_TAGS }}
+          CHEF_LICENSE_KEY: ${{ secrets.CHEF_LICENSE_KEY }}
       - name: Test-Kitchen Verify
         uses: actionshub/test-kitchen@main
         with:
