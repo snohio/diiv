@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the diiv cookbook.
 
+## 4.1.2
+
+- Fixed idempotent issue with Debian cookbooks.
+
 ## 4.1.1
 
 - Fixed timing issues on Ubuntu installation not finishing (similar to previous fix for Windows)

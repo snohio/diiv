@@ -65,7 +65,7 @@ ruby_block 'wait for subsonic install' do
     end
   end
   action :run
-  not_if { node['packages']['Subsonic'] }
+  not_if { node['packages']['subsonic'] }
 end
 
 service 'subsonic' do
