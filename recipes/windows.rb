@@ -4,26 +4,23 @@
 #
 # Copyright:: 2025, Mike Butler, All Rights Reserved.
 
-# Check if the Subsonic user already exists
-user_exists = begin
-                powershell_out!("Get-LocalUser -Name 'subsonic'").exitstatus == 0
-              rescue
-                false
-              end
-
 # Create a user for Subsonic if it does not already exist
-unless user_exists
-  CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..')').to_a
-  def random_password(length = 18)
-    CHARS.sort_by { rand }.join[0...length]
-  end
-  randpass = random_password
-  log "Password is #{randpass}. Forget I every told you that."
+require 'securerandom'
 
-  windows_user 'subsonic' do
-    password randpass
-    action :create
-  end
+CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..'~').to_a
+def random_password(length = 18)
+  CHARS.sort_by { SecureRandom.random_number }.join[0...length]
+end
+randpass = random_password
+
+log "Password is #{randpass}. Forget I ever told you that." do
+  not_if { shell_out('net user subsonic').exitstatus == 0 }
+end
+
+windows_user 'subsonic' do
+  password randpass
+  action :create
+  not_if { shell_out('net user subsonic').exitstatus == 0 }
 end
 
 group 'Administrators' do
@@ -94,17 +91,26 @@ ruby_block 'wait for subsonic install' do
   not_if { node['packages']['Subsonic'] }
 end
 
-windows_service 'Subsonic' do
+# Configure service with credentials only when user is first created
+windows_service 'Subsonic Initial Setup' do
+  service_name 'Subsonic'
   action [:configure, :start]
   run_as_user '.\subsonic'
-  run_as_password "#{randpass}"
+  run_as_password randpass.to_s
+  not_if 'net user subsonic'
+end
+
+# On subsequent runs, just ensure service is started (don't reconfigure credentials)
+windows_service 'Subsonic' do
+  action :start
+  only_if 'net user subsonic'
 end
 
 # This is used for sleeping after the Subsonic service is started to ensure it is fully operational before proceeding.
 # This is called by the notifies function.
 ruby_block 'sleep after Subsonic restart' do
   block do
-    sleep 10  # Pauses for 10 seconds
+    sleep 10 # Pauses for 10 seconds
   end
   action :nothing
 end

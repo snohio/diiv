@@ -55,6 +55,7 @@ end
 dpkg_package 'subsonic' do
   source '/tmp/' + node['diiv']['install_file']
   action :install
+  not_if { node['packages']['subsonic'] }
 end
 
 ruby_block 'wait for subsonic install' do
@@ -74,7 +75,7 @@ end
 
 ruby_block 'sleep after Subsonic Restart' do
   block do
-    sleep 10  # Pauses for 10 seconds
+    sleep 10 # Pauses for 10 seconds
   end
   action :nothing
 end

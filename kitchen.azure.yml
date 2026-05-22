@@ -22,6 +22,7 @@ provisioner:
   max_retries: 3
   wait_for_retry: 90
   retry_on_exit_code: [35, 213]
+  chef_license_key: <%= ENV["CHEF_LICENSE_KEY"] %>
 
 verifier:
   name: inspec

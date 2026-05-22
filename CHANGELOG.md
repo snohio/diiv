@@ -4,7 +4,9 @@ This file is used to list changes made in each version of the diiv cookbook.
 
 ## 4.1.2
 
-- Fixed idempotent issue with Debian cookbooks.
+- Fixed issue with Debian where the install file in tmp was removed - it was trying to install and caused a client run failure. Guarding install against if it is already installed.
+- Updated ci.yaml for Chef Workstations 26 future stuffs
+- Cookstyle Updates from Latest Version
 
 ## 4.1.1
 

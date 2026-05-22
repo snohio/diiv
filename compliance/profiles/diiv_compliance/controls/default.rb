@@ -10,6 +10,9 @@ control 'subsonic-port' do
   describe port(8880) do
     it { should be_listening }
   end
+  describe port(80) do
+    it { should_not be_listening }
+  end
 end
 
 control 'Subsonic - HTTPS' do
