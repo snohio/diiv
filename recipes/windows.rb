@@ -13,14 +13,16 @@ def random_password(length = 18)
 end
 randpass = random_password
 
-log "Password is #{randpass}. Forget I ever told you that." do
-  not_if { shell_out('net user subsonic').exitstatus == 0 }
-end
-
 windows_user 'subsonic' do
   password randpass
   action :create
-  not_if { shell_out('net user subsonic').exitstatus == 0 }
+  not_if 'net user subsonic'
+  notifies :write, 'log[subsonic password]', :immediately
+end
+
+log 'subsonic password' do
+  message "Password is #{randpass}. Forget I ever told you that."
+  action :nothing
 end
 
 group 'Administrators' do

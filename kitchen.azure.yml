@@ -5,24 +5,18 @@ driver:
   location: "East US"
   machine_size: "Standard_D2s_v3"
   azure_resource_group_prefix: "GITACTION-DIIV-"
-  resource_group_tags:
-    X-TTL: '2'
-    application: 'chef'
-    team: 'chef-se'
-    owner: 'michael.butler@progress.com'
-    expiration: '2026-09-30'
-    ephemeral: 'no'
+  resource_group_tags: <%= ENV["AZURE_TAGS"] %>
 
 provisioner:
   name: chef_infra
   always_update_cookbooks: true
-  product_name: chef
-  product_version: 18
+  product_name: chef-ice
+  product_version: 19
   channel: stable
   max_retries: 3
   wait_for_retry: 90
   retry_on_exit_code: [35, 213]
-  chef_license_key: <%= ENV["CHEF_LICENSE_KEY"] %>
+  chef_license_key: <%= require "json"; ENV["CHEF_LICENSE_ID"].to_json %>
 
 verifier:
   name: inspec

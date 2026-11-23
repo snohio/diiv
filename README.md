@@ -90,29 +90,37 @@ Most of these enhancements were done with CoPilot in VSCode. I can't express eno
 
 ### Windows subsonic account and password
 
-> I have a random password creation process working as of 4.0.0. This is now guarded by checking if the account exists before generating the random password and adding it. It looks like this:
+The Windows recipe generates a random password on each Chef run, but creates the
+`subsonic` account only if it does not already exist. The password is logged only
+when the account is created; it is not the password of an existing account.
+Chef's run log will contain the new password, so protect access to that log.
 
 ```ruby
-user_exists = powershell_out!("Get-LocalUser -Name 'subsonic'").exitstatus == 0 rescue false
+windows_user 'subsonic' do
+  password randpass
+  action :create
+  not_if 'net user subsonic'
+  notifies :write, 'log[subsonic password]', :immediately
+end
 
-unless user_exists
-  CHARS = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a + ('!'..')').to_a
-  def random_password(length = 18)
-    CHARS.sort_by { rand }.join[0...length]
-  end
-  randpass = random_password
-  log "Password is #{randpass}. Forget I every told you that."
-
-  windows_user 'subsonic' do
-    password randpass
-    action :create
-  end
+log 'subsonic password' do
+  message "Password is #{randpass}. Forget I ever told you that."
+  action :nothing
 end
 ```
 
 > BONUS: Honestly, this is the place for a Secrets Management tool and process.
 
 ### Windows Kitchen Enhancements
+
+Azure CI uses Chef Workstation Enterprise 26.2.0 and Chef Infra Client 19.
+Configure the `SUBSCRIPTION_ID`, `CLIENT_ID`, `CLIENT_SECRET`, `TENANT_ID`, and
+commercial-download-entitled `CHEF_LICENSE_ID` repository secrets, and set the
+`AZURE_TAGS` repository variable to a flow-style YAML or JSON mapping of
+resource tags. For local runs with the same configuration, set
+`AZURE_SUBSCRIPTION_ID`, `CHEF_LICENSE_ID`, and `AZURE_TAGS`, plus
+`KITCHEN_YAML=kitchen.azure.yml` and `KITCHEN_LOCAL_YAML=/dev/null`, in the
+environment.
 
 I think I narrowed down some of the ongoing issues with WinRM to Windows systems. The following block in the kitchen.yml file for Windows seems to have improved speed of client install and set WinRM to connect - every time. I do use a kitchen.local.yaml file, but I did copy the changes to `kitchen.yaml` for others to reference. This is more specific to Azure.
 
